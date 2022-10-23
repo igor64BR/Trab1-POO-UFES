@@ -1,34 +1,38 @@
+from entities.characters_lib import Character_enum, Characters_lib
 from entities.player import *
+from entities.screen import Screen
 import pygame as pg
-from constants.screen import Display_Infos
+
 
 def main():
     pg.init()
 
-    screen = pg.display.set_mode((Display_Infos.SCREEN_WIDTH, Display_Infos.SCREEN_HEIGHT))
+    screen = Screen()
 
-    player1 = Player(0, screen)
-    player2 = Player(1, screen)
+    Commander.screen = screen.display
+
+    player1 = Player(Player.Player1, screen,
+                     Characters_lib.characters[Character_enum.Mage1])
+
+    player2 = Player(Player.Player2, screen,
+                     Characters_lib.characters[Character_enum.Mage2])
 
     while True:
-        for event in pg.event.get():
-            quit_events = [
-                event.type == pg.QUIT,
-                event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE,
-                pg.key.get_pressed()[pg.K_ESCAPE]
-            ]
+        pg.display.update()
 
-            if any(quit_events):
-                print("Encerrando o programa.")
-                return
-        
-        screen.fill(Display_Infos.BG_COLOR)
-        
+        for event in pg.event.get():
+            Commander.get_exit(event)
+            Commander.get_pause(event)
+
+        if Commander.game_is_paused:
+            screen.show_pause()
+            continue
+
+        screen.reset_display()
+
         player1.execute()
         player2.execute()
-        
-        pg.display.flip()
-            
-            
+
+
 if __name__ == '__main__':
     main()

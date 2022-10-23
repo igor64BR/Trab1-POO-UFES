@@ -1,80 +1,45 @@
-from imp import init_builtin
-from mimetypes import common_types
-from turtle import screensize
-from typing import Dict
+from dataclasses import dataclass
+from typing import ClassVar, Dict, Tuple
 import pygame as pg
+from entities.commander import Commander
+from entities.character import Character
+from entities.screen import Screen
 
-from constants.screen import Display_Infos
-
+@dataclass
 class Player:
-    PLAYER_COLORS = {
-        0: (250, 0, 0, 1),
-        1: (0, 250, 0, 1)
-    }
+    Player1: ClassVar[int] = 0
+    Player2: ClassVar[int] = 1
     
-    INITIAL_POSITIONS = {
-        0: (Display_Infos.PX, Display_Infos.PX),
-        1: (Display_Infos.SCREEN_WIDTH - Display_Infos.PX, Display_Infos.SCREEN_HEIGHT - Display_Infos.PX)
-    }
+    __player: int
+    __screen: Screen
+    character: Character
     
-    def __init__(self, player: int, screen) -> None:
-        self.screen = screen
-        self.color = Player.PLAYER_COLORS[player]
+    def __post_init__(self):
         
-        self.initial_position = Player.INITIAL_POSITIONS[player]
-        self.x = self.initial_position[0]
-        self.y = self.initial_position[1]
+        self.ininitial_position = Screen.get_initial_positions(self.__player)
+            
+        self.character.set_initial_position(self.ininitial_position)
         
-        self.P1_COMMANDS: Dict = {
-            pg.K_w: self.move_up,
-            pg.K_s: self.move_down,
-            pg.K_a: self.move_left,
-            pg.K_d: self.move_right
-        }
-        
-        self.P2_COMMANDS: Dict = {
-            pg.K_i: self.move_up,
-            pg.K_k: self.move_down,
-            pg.K_j: self.move_left,
-            pg.K_l: self.move_right
-        }
-        
-        self.commands = (self.P1_COMMANDS, self.P2_COMMANDS)[player]
-        
-        # Attributes
-        self.size = 20
-        self.speed = 1
+        self.__set_commands()
     
     def execute(self):
-        self.get_command()
-        self.draw()
+        self.character.draw(self.__screen.display)
+        Commander.get_command(self.commands)
     
-    def get_command(self):
-        keys = pg.key.get_pressed()
+    def __set_commands(self):
+        self._P1_COMMANDS: Dict = {
+            pg.K_w: self.character.move_up,
+            pg.K_s: self.character.move_down,
+            pg.K_a: self.character.move_left,
+            pg.K_d: self.character.move_right
+        }
         
-        for tecla, action in self.commands.items():
-            if keys[tecla]:
-                action()
+        self._P2_COMMANDS: Dict = {
+            pg.K_i: self.character.move_up,
+            pg.K_k: self.character.move_down,
+            pg.K_j: self.character.move_left,
+            pg.K_l: self.character.move_right
+        }
         
-    def draw(self):
-        pg.draw.circle(
-            surface=self.screen,
-            color=self.color,
-            center=(self.x, self.y),
-            radius=self.size,
-            width=0
-        )
-    
-    def move_up(self):
-        self.y -= self.speed
+        self.commands = (self._P1_COMMANDS, self._P2_COMMANDS)[self.__player]
         
-    def move_down(self):
-        self.y += self.speed
-    
-    def move_right(self):
-        self.x += self.speed
-    
-    def move_left(self):
-        self.x -= self.speed
-    
-
