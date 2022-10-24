@@ -1,5 +1,6 @@
 import sys
 import time
+from typing import Any, Callable, Dict
 import pygame as pg
 
 
@@ -19,17 +20,19 @@ class Commander:
             sys.exit(0)
 
     def get_pause(event):
-        if (event.type == pg.KEYDOWN and event.key == pg.K_SPACE):
+        if event.type != pg.KEYDOWN:
+            return
+            
+        if event.key == pg.K_SPACE:
             Commander.game_is_paused = not Commander.game_is_paused  # toggle pause
 
-    def get_command(dict) -> bool:
+    def get_command(dict):
         keys = pg.key.get_pressed()
 
         for key, action in dict.items():
             if keys[key]:
                 action()
                 pg.display.flip()
-                time.sleep(0.1)
 
     def toggle_pause():
         Commander.game_is_paused = not Commander.game_is_paused
