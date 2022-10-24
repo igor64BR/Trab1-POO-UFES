@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from operator import indexOf
 from typing import Any, ClassVar, Dict, Tuple
 import pygame as pg
-from entities.common_actions import Common_actions
+from entities.commander import Commander
 
 from entities.constants.screen import Display_Infos
 from entities.character import Character
@@ -36,8 +36,8 @@ class Player:
     def execute(self):
         self.swap_character()
         
-        Common_actions.get_command(self.commands)
         self.draw_characters()
+        Commander.get_command(self.commands)
         
     def get_previous_character(self):
         self.get_character()
@@ -67,7 +67,7 @@ class Player:
         
         swap_commands = (p1_swap_commands, p2_swap_commands)
         
-        Common_actions.get_command(swap_commands[self.player])
+        Commander.get_command(swap_commands[self.player])
         pass
     
     def set_commands(self):
