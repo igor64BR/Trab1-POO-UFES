@@ -1,5 +1,3 @@
-from operator import truediv
-from turtle import screensize
 from entities.characters_lib import Character_enum, Characters_lib
 from entities.player import *
 import pygame as pg
@@ -21,22 +19,10 @@ def main():
     Commander.screen = screen
 
     player1 = Player(Player.Player1, screen,
-                     (
-                         Characters_lib.characters[Character_enum.Mage1],
-                         Characters_lib.characters[Character_enum.Shooter1],
-                         Characters_lib.characters[Character_enum.Support1],
-                         Characters_lib.characters[Character_enum.Tank1],
-                         Characters_lib.characters[Character_enum.Warrior1],
-                     ))
+                     Characters_lib.characters[Character_enum.Mage1])
 
     player2 = Player(Player.Player2, screen,
-                     (
-                         Characters_lib.characters[Character_enum.Mage2],
-                         Characters_lib.characters[Character_enum.Shooter2],
-                         Characters_lib.characters[Character_enum.Support2],
-                         Characters_lib.characters[Character_enum.Tank2],
-                         Characters_lib.characters[Character_enum.Warrior2],
-                     ))
+                     Characters_lib.characters[Character_enum.Mage2])
 
     # TODO: Fix p2 commands
     while True:
