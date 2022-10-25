@@ -1,22 +1,15 @@
 from entities.characters_lib import Character_enum, Characters_lib
 from entities.player import *
+from entities.screen import Screen
 import pygame as pg
-from entities.constants.screen import Display_Infos
 
 
 def main():
     pg.init()
 
-    screen = pg.display.set_mode(
-        (Display_Infos.SCREEN_WIDTH, Display_Infos.SCREEN_HEIGHT))
+    screen = Screen()
 
-    font = pg.font.SysFont('courier new', 50, True)
-    pause_text = font.render("PAUSED", True, (250, 250, 250), (0, 0, 0))
-    pause_text_area = pause_text.get_rect()
-    pause_text_area.center = (
-        Display_Infos.SCREEN_WIDTH // 2, Display_Infos.SCREEN_HEIGHT // 2)
-
-    Commander.screen = screen
+    Commander.screen = screen.display
 
     player1 = Player(Player.Player1, screen,
                      Characters_lib.characters[Character_enum.Mage1])
@@ -32,10 +25,10 @@ def main():
             Commander.get_pause(event)
 
         if Commander.game_is_paused:
-            screen.blit(pause_text, pause_text_area)
+            screen.show_pause()
             continue
 
-        screen.fill(Display_Infos.BG_COLOR)
+        screen.reset_display()
 
         player1.execute()
         player2.execute()

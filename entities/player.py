@@ -1,37 +1,29 @@
 from dataclasses import dataclass
-from operator import indexOf
-from typing import Any, ClassVar, Dict, Tuple
+from typing import ClassVar, Dict, Tuple
 import pygame as pg
 from entities.commander import Commander
-
-from entities.constants.screen import Display_Infos
 from entities.character import Character
+from entities.screen import Screen
 
 @dataclass
 class Player:
     Player1: ClassVar[int] = 0
     Player2: ClassVar[int] = 1
     
-    Player1_initial_position: ClassVar[Tuple[float]] = (Display_Infos.PX, Display_Infos.PX)
-    Player2_initial_position: ClassVar[Tuple[float]] = (
-        Display_Infos.SCREEN_WIDTH - Display_Infos.PX, 
-        Display_Infos.SCREEN_HEIGHT - Display_Infos.PX, 
-    )
-    
     __player: int
-    screen: Any
+    __screen: Screen
     character: Character
     
     def __post_init__(self):
         
-        self.ininitial_position = (Player.Player1_initial_position, Player.Player2_initial_position)[self.__player]
+        self.ininitial_position = Screen.get_initial_positions(self.__player)
             
         self.character.set_initial_position(self.ininitial_position)
         
         self.__set_commands()
     
     def execute(self):
-        self.character.draw(self.screen)
+        self.character.draw(self.__screen.display)
         Commander.get_command(self.commands)
     
     def __set_commands(self):
