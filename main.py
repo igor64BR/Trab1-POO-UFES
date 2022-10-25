@@ -24,7 +24,6 @@ def main():
     player2 = Player(Player.Player2, screen,
                      Characters_lib.characters[Character_enum.Mage2])
 
-    # TODO: Fix p2 commands
     while True:
         pg.display.update()
 

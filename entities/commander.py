@@ -32,7 +32,6 @@ class Commander:
         for key, action in dict.items():
             if keys[key]:
                 action()
-                pg.display.flip()
 
     def toggle_pause():
         Commander.game_is_paused = not Commander.game_is_paused
