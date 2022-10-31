@@ -20,7 +20,7 @@ class Character_enum(Enum):
 @dataclass
 class Characters_lib:
     characters: ClassVar[Dict[Character_enum, Character]] = {
-        Character_enum.Mage1: Character(2, 9, 100, (0, 0, 250, 1)),
+        Character_enum.Mage1: Character(2, 9, 100, (250, 0, 250, 1)),
         Character_enum.Mage2: Character(2, 9, 100, (0, 0, 250, 1)),
         Character_enum.Tank1: Character(2, 9, 100, (0, 250, 0, 1)),
         Character_enum.Tank2: Character(2, 9, 100, (0, 0, 250, 1)),

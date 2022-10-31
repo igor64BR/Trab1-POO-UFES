@@ -1,6 +1,4 @@
 import sys
-import time
-from typing import Any, Callable, Dict
 import pygame as pg
 
 
@@ -8,6 +6,7 @@ class Commander:
     screen = None
     game_is_paused = False
 
+    @staticmethod
     def get_exit(event):
         quit_events = [
             event.type == pg.QUIT,
@@ -19,20 +18,22 @@ class Commander:
             print("Encerrando o programa.")
             sys.exit(0)
 
+    @staticmethod
     def get_pause(event):
         if event.type != pg.KEYDOWN:
             return
-            
+
         if event.key == pg.K_SPACE:
             Commander.game_is_paused = not Commander.game_is_paused  # toggle pause
 
+    @staticmethod
     def get_command(dict):
         keys = pg.key.get_pressed()
 
         for key, action in dict.items():
             if keys[key]:
                 action()
-                pg.display.flip()
 
+    @staticmethod
     def toggle_pause():
         Commander.game_is_paused = not Commander.game_is_paused

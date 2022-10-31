@@ -7,7 +7,7 @@ import pygame as pg
 class Character:
     # TODO: Swap below props from ClassVar -> ObjectVar
     size = 10
-    speed = 5
+    speed = 2
     
     # Attributes
     strength: int
