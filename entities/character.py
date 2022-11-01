@@ -6,8 +6,7 @@ import pygame as pg
 @dataclass
 class Character:
     # TODO: Swap below props from ClassVar -> ObjectVar
-    size = 10
-    speed = 2
+ 
     
     # Attributes
     strength: int
@@ -17,6 +16,9 @@ class Character:
     # Shape
     color: Tuple[int]
         
+    size: int = 10
+    speed: int = 2
+
     def __post_init__(self):
         pass
     
