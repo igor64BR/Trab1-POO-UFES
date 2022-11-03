@@ -4,8 +4,13 @@ import pygame as pg
 
 @dataclass
 class Screen:
-    SCREEN_WIDTH = 1280
-    SCREEN_HEIGHT = 720
+    __SCREEN_WIDTH = 1280
+    __SCREEN_HEIGHT = 720
+
+    SCREEN_TOP = 0
+    SCREEN_BOTTOM = __SCREEN_HEIGHT
+    SCREEN_LEFT = 0
+    SCREEN_RIGHT = __SCREEN_WIDTH
 
     BORDER = 20
 
@@ -13,7 +18,7 @@ class Screen:
 
     def __post_init__(self):
         self.display = pg.display.set_mode(
-            (Screen.SCREEN_WIDTH, Screen.SCREEN_HEIGHT))
+            (Screen.__SCREEN_WIDTH, Screen.__SCREEN_HEIGHT))
 
         self.__set_pause_display()
     
@@ -26,8 +31,8 @@ class Screen:
     def get_initial_positions(player: int):
         player1_position = (Screen.BORDER, Screen.BORDER)
         player2_position = (
-            Screen.SCREEN_WIDTH - Screen.BORDER, 
-            Screen.SCREEN_HEIGHT - Screen.BORDER, 
+            Screen.__SCREEN_WIDTH - Screen.BORDER, 
+            Screen.__SCREEN_HEIGHT - Screen.BORDER, 
         )
 
         return [player1_position, player2_position][player]
@@ -40,4 +45,4 @@ class Screen:
         self.pause_text_area = self.pause_text.get_rect()
 
         self.pause_text_area.center = (
-            Screen.SCREEN_WIDTH // 2, Screen.SCREEN_HEIGHT // 2)
+            Screen.__SCREEN_WIDTH // 2, Screen.__SCREEN_HEIGHT // 2)

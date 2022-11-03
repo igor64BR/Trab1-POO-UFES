@@ -1,30 +1,31 @@
 from dataclasses import dataclass
-from typing import Dict, Tuple
+from typing import Tuple
 import pygame as pg
+from entities.screen import Screen
 
 
 @dataclass
 class Character:
-    # TODO: Swap below props from ClassVar -> ObjectVar
- 
-    
-    # Attributes
     strength: int
-    mobility: int
-    stamina: int
+    hability_power: int
     
-    # Shape
-    color: Tuple[int]
-        
-    size: int = 10
-    speed: int = 2
+    __max_stamina: int = 100
+    __max_life: int = 100
+    
+    color: Tuple[int] = (250, 250, 250, 1)
 
     def __post_init__(self):
-        pass
+        self.current_life = self.__max_life
+        self.current_stamina = self.__max_stamina
+
+        self.size = self.__max_life // 10
+        self.speed = 10 / self.size
     
     def set_initial_position(self, initial_position: Tuple[float]):
         self.x = initial_position[0]
         self.y = initial_position[1]
+
+        self.__set_limits()
         
     def draw(self, screen):
         pg.draw.circle(
@@ -36,14 +37,28 @@ class Character:
         )
     
     def move_up(self):
-        self.y -= self.speed
+        self.__set_limits()
+        if self.top > Screen.SCREEN_TOP:
+            self.y -= self.speed
         
     def move_down(self):
-        self.y += self.speed
+        self.__set_limits()
+        if self.bottom < Screen.SCREEN_BOTTOM:
+            self.y += self.speed
     
     def move_right(self):
-        self.x += self.speed
+        self.__set_limits()
+        if self.right < Screen.SCREEN_RIGHT:
+            self.x += self.speed
     
     def move_left(self):
-        self.x -= self.speed
-        
+        self.__set_limits()
+        if self.left > Screen.SCREEN_LEFT:
+            self.x -= self.speed
+
+    def  __set_limits(self):
+        self.top = self.y - self.size
+        self.bottom = self.y + self.size
+
+        self.right = self.x + self.size
+        self.left = self.x - self.size

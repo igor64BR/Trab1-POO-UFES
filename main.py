@@ -11,11 +11,8 @@ def main():
 
     Commander.screen = screen.display
 
-    player1 = Player(Player.Player1, screen,
-                     Characters_lib.characters[Character_enum.Mage1])
-
-    player2 = Player(Player.Player2, screen,
-                     Characters_lib.characters[Character_enum.Mage2])
+    player1 = Player(Player.Player1, screen, Character(10, 10))
+    player2 = Player(Player.Player2, screen, Character(10, 10, 200, 200, (250, 0, 0, 1)))
 
     while True:
         pg.display.update()
