@@ -6,11 +6,8 @@ import pygame as pg
 
 def main():
     pg.init()
-
     screen = Screen()
-
     Commander.screen = screen.display
-
     player1 = Player(Player.Player1, screen, Character(10, 10))
     player2 = Player(Player.Player2, screen, Character(10, 10, 200, 200, (250, 0, 0, 1)))
 
