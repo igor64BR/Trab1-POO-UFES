@@ -15,8 +15,7 @@ class Commander:
         ]
 
         if any(quit_events):
-            print("Encerrando o programa.")
-            sys.exit(0)
+            Commander.exit_game()
 
     @staticmethod
     def get_pause(event):
@@ -37,3 +36,8 @@ class Commander:
     @staticmethod
     def toggle_pause():
         Commander.game_is_paused = not Commander.game_is_paused
+
+    @staticmethod
+    def exit_game():
+        pg.quit()
+        return sys.exit(0)
