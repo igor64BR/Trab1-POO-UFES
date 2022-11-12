@@ -4,5 +4,4 @@ from entities.game_runner import Game_runner
 
 if __name__ == '__main__':
     pygame.init()
-    # Menu()
-    Game_runner.run()
+    Menu()
