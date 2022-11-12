@@ -45,3 +45,12 @@ class Screen:
 
         self.pause_text_area.center = (
             self.__SCREEN_WIDTH // 2, self.__SCREEN_HEIGHT // 2)
+
+    def draw_circle(self, color: Tuple[int], center: Tuple[float], radius: int, width: int = 0):
+        pg.draw.circle(
+            surface=self.display,
+            color=color,
+            center=center,
+            radius=radius,
+            width=width
+        )
