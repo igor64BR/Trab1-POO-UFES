@@ -2,16 +2,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import sqrt
 from typing import ClassVar, List, Tuple
-import pygame as pg
 from entities.screen import Screen
 
 
 @dataclass
-class Character:
-    characters: ClassVar[List[Character]] = []
+class Character_body:
+    characters: ClassVar[list[Character_body]] = []
     ATTACK_BORDER_COLOR: ClassVar[Tuple[int]] = (0, 250, 0, 1)
 
     screen: Screen
+    player: int
     strength: int
     hability_power: int
 
@@ -44,7 +44,7 @@ class Character:
         )
 
     def take_damage(self, damage: int):
-        print(f'character {Character.characters.index(self) + 1} took {damage} of damage')
+        print(f'character {Character_body.characters.index(self) + 1} took {damage} of damage')
 
         self.current_life -= damage
 
@@ -54,7 +54,7 @@ class Character:
         enemy = self.__get_enemy()
 
         self.screen.draw_circle(
-            color=Character.ATTACK_BORDER_COLOR,
+            color=Character_body.ATTACK_BORDER_COLOR,
             center=self.__get_position(),
             radius=self.attack_range,
             width=2
@@ -86,7 +86,7 @@ class Character:
     def __get_position(self):
         return (self.x, self.y)
 
-    def __enemy_in_attack_range(self, enemy: Character) -> bool:
+    def __enemy_in_attack_range(self, enemy: Character_body) -> bool:
         center_dist = self.__get_dist_from_enemy(enemy)
 
         return center_dist <= enemy.size + self.attack_range
@@ -99,9 +99,9 @@ class Character:
         self.left = self.x - self.size
 
     def __get_enemy(self):
-        return [character for character in Character.characters if character != self][0]
+        return [character for character in Character_body.characters if character != self][0]
 
-    def __get_dist_from_enemy(self, enemy: Character):
+    def __get_dist_from_enemy(self, enemy: Character_body):
         """Gets the distance from self and enemy's centers"""
 
         x_dist = abs(self.x - enemy.x)

@@ -26,12 +26,24 @@ class Commander:
             Commander.game_is_paused = not Commander.game_is_paused  # toggle pause
 
     @staticmethod
-    def get_command(dict):
+    def get_continuous_commands(dict):
         keys = pg.key.get_pressed()
 
         for key, action in dict.items():
             if keys[key]:
                 action()
+
+
+    # TODO: Fix; Method not working
+    @staticmethod
+    def get_keydown_commands(dict: dict):
+        for event in pg.event.get():
+            if event.type != pg.KEYDOWN:
+                return
+            
+            for key, action in dict.items():
+                if event.key == key:
+                    action()
 
     @staticmethod
     def toggle_pause():

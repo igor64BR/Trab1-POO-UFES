@@ -1,47 +1,41 @@
 from dataclasses import dataclass
 import pygame as pg
+from cronometro import Cronometro
 
 from entities.screen import Screen
 from entities.commander import Commander
 from entities.player import Player
-from entities.character import Character
+from entities.characters.character import Character
+from entities.characters.saci import Saci
 
 
 @dataclass
 class Game_runner:
     @staticmethod
-    def run():
-        screen = Screen()
-        screen.set_pause_display()
+    def run(cronometro: 'Cronometro'):
+        
+        screen = Screen(cronometro)
 
         Commander.screen = screen.display
         player1 = Player(
             Player.Player1,
             screen,
-            Character(
-                screen=screen, 
-                strength=1,
-                attack_range=100, 
-                hability_power=10, 
-                max_stamina=50)
+            Saci(screen, Player.Player1)
         )
 
         player2 = Player(
             Player.Player2,
             screen,
-            Character(
-                screen=screen,
-                strength=20,
-                hability_power=10,
-                max_stamina=200,
-                max_life=200,
-                color=(250, 0, 0, 1)
-            )
+            Saci(screen, Player.Player2)
         )
 
         Player.players = [player1, player2]
 
+        Character.cronometro = cronometro
+
         while True:
+            screen.show_time()
+
             pg.display.update()
 
             for event in pg.event.get():
