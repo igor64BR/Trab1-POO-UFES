@@ -1,10 +1,10 @@
+import sys
 import pygame
 from pygame import mixer
 from pygame.font import Font
-from entities.game_runner import Game_runner
+from entities.game import Game
 from entities.button import Button
-from entities.screen import Screen
-from entities.commander import Commander
+from entities.configs import *
 
 
 class Menu:
@@ -20,7 +20,7 @@ class Menu:
     }
 
     def __init__(self) -> None:
-        self.screen = Screen()
+        self.screen = pygame.display.set_mode(MENU_DIMENSIONS)
         self.background_image = pygame.image.load("img/capa-3.jpg")
         pygame.display.set_caption("Menu")
 
@@ -37,9 +37,9 @@ class Menu:
         MENU_RECT = MENU_TEXT.get_rect(center=(640, 100))
         
         while True:
-            self.screen.display.blit(self.background_image, (0, 0))
+            self.screen.blit(self.background_image, (0, 0))
 
-            self.screen.display.blit(MENU_TEXT, MENU_RECT)
+            self.screen.blit(MENU_TEXT, MENU_RECT)
 
             self.__execute_command()
 
@@ -50,10 +50,14 @@ class Menu:
 
         for _, button in Menu.BUTTONS.items():
             button.changeColor(mouse_pos)
-            button.update(self.screen.display)
+            button.update(self.screen)
 
         for event in pygame.event.get():
-            Commander.get_exit(event)
+            if event.type == pg.QUIT:
+                self.__exit_game()
+
+            if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                self.__exit_game()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if Menu.BUTTONS['play'].checkForInput(mouse_pos):
@@ -63,13 +67,25 @@ class Menu:
                     self.__options()
 
                 if Menu.BUTTONS['quit'].checkForInput(mouse_pos):
-                    Commander.exit_game()
+                    self.__exit_game()
 
     def __play(self):
         pygame.display.set_caption('UFC - Ultimate Folclore Championship')
-        Game_runner.run()
+        self.__run_game()
 
     def __options(self):
         return
-        while True:
-            pygame.display.update()
+
+    def __run_game(self):
+        game = Game()
+        # game.intro_screen()
+        game.start_new_game()
+        while game.game_is_running:
+            game.main()
+            # game.game_over()
+
+        self.__exit_game()
+
+    def __exit_game(self):
+        pg.quit()
+        sys.exit(0)

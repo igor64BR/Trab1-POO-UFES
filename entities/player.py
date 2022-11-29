@@ -1,75 +1,102 @@
-from __future__ import annotations
-from typing import ClassVar, Dict, List
-from dataclasses import dataclass
-import pygame as pg
-from entities.commander import Commander
-from entities.characters.character import Character
-from entities.characters.character_phisics import Character_body
-from entities.screen import Screen
+from entities.configs import *
+from entities.sprite import Sprite
 
+class Player(Sprite):
+    def __init__(self, game, x: int, y: int, color: tuple[int, int, int]) -> None:
+        super().__init__(game, x, y, color)
 
-@dataclass
-class Player:
-    Player1: ClassVar[int] = 0
-    Player2: ClassVar[int] = 1
+        self.commands = self.get_command()
 
-    players: ClassVar[List[Player]]
+        self.SPEED = 3
 
-    __player: int
-    __screen: Screen
-    character: Character
+        self.x_current_speed = 0
+        self.y_current_speed = 0
 
-    def __post_init__(self):
+    def set_groups(self, game):
+        self.game = game
+        self.groups = self.game.all_sprites
 
-        self.ininitial_position = self.__screen.get_initial_positions(
-            self.__player)
+    def update(self, *args, **kwargs) -> None:
+        self.get_movement_commands()
 
-        self.character.body.set_initial_position(self.ininitial_position)
+    def get_movement_commands(self):
+        keys = pg.key.get_pressed()
 
-        Character_body.characters.append(self.character.body)
-        self.__set_commands()
+        for key, action in self.commands.items():
+            if keys[key]:
+                action()
 
-    def execute(self):
-        self.character.update_skill()
-        self.character.body.draw()
-        Commander.get_continuous_commands(self.commands)
+        self.rect.x += self.x_current_speed
+        self.collide_blocks('x')
 
-        # TODO: Fix: not working
-        # Commander.get_keydown_commands(self.combat_commands)
+        self.rect.y += self.y_current_speed
+        self.collide_blocks('y')
 
-    def __set_commands(self):
-        self._P1_COMMANDS: Dict = {
-            pg.K_w: self.character.body.move_up,
-            pg.K_s: self.character.body.move_down,
-            pg.K_a: self.character.body.move_left,
-            pg.K_d: self.character.body.move_right,
+        self.reset_speed_changes()
 
-            # TODO: Move to combat_commands
-            pg.K_f: self.character.body.attack,
-            pg.K_e: self.character.try_run_skill
+    def collide_blocks(self, direction):
+        hits = pg.sprite.spritecollide(self, self.game.block_sprites, False)
+
+        if not hits:
+            return
+
+        if direction == 'x':
+            self.check_x_collision(hits)
+
+        elif direction == 'y':
+            self.check_y_collision(hits)
+
+    def check_y_collision(self, hits):
+        if self.y_current_speed > 0:  # Going to down
+            self.rect.y = hits[0].rect.top - self.rect.height
+
+        elif self.y_current_speed < 0:  # Going to up
+            self.rect.y = hits[0].rect.bottom
+
+    def check_x_collision(self, hits):
+        if self.x_current_speed > 0:  # Going to left
+            self.rect.x = hits[0].rect.left - self.rect.width
+
+        elif self.x_current_speed < 0:  # Going to right
+            self.rect.x = hits[0].rect.right
+
+    def reset_speed_changes(self):
+        self.x_current_speed = 0
+        self.y_current_speed = 0
+
+    def move_up(self):
+        self.move(UP, False, -1)
+
+    def move_down(self):
+        self.move(DOWN, False)
+
+    def move_right(self):
+        self.move(RIGHT, True)
+
+    def move_left(self):
+        self.move(LEFT, True, -1)
+
+    def move(self, facing: str, x_speed_change: bool, magnitude: int = 1):
+        self.facing = facing
+
+        if x_speed_change:
+            self.x_current_speed += magnitude * self.SPEED
+        else:
+            self.y_current_speed += magnitude * self.SPEED
+
+    def get_command(self) -> dict:
+        return {
+            pg.K_w: self.move_up,
+            pg.K_s: self.move_down,
+            pg.K_d: self.move_right,
+            pg.K_a: self.move_left,
+        }        
+
+class Player2(Player):
+    def get_command(self) -> dict:
+        return {
+            pg.K_i: self.move_up,
+            pg.K_k: self.move_down,
+            pg.K_l: self.move_right,
+            pg.K_j: self.move_left,
         }
-
-        self._P1_COMBAT_COMMANDS = {
-            # pg.K_f: self.character.body.attack,
-            # pg.K_c: self.character.body.skill_start
-        }
-
-        self._P2_COMMANDS: Dict = {
-            pg.K_i: self.character.body.move_up,
-            pg.K_k: self.character.body.move_down,
-            pg.K_j: self.character.body.move_left,
-            pg.K_l: self.character.body.move_right,
-
-            # TODO: Move to combat_commands
-            pg.K_h: self.character.body.attack,
-            pg.K_u: self.character.try_run_skill
-        }
-
-        self._P2_COMBAT_COMMANDS = {
-            # pg.K_h: self.character.body.attack,
-            # pg.K_n: self.character.body.skill_start
-        }
-
-        player = self.__player
-        self.commands = (self._P1_COMMANDS, self._P2_COMMANDS)[player]
-        self.combat_commands = (self._P1_COMBAT_COMMANDS, self._P2_COMBAT_COMMANDS)[player]
