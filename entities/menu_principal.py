@@ -78,11 +78,7 @@ class Menu:
 
     def __run_game(self):
         game = Game()
-        # game.intro_screen()
-        game.start_new_game()
-        while game.game_is_running:
-            game.main()
-            # game.game_over()
+        game.run()
 
         self.__exit_game()
 

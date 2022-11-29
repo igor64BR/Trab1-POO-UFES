@@ -4,7 +4,7 @@ import sys
 from entities.block import Block
 
 from entities.configs import *
-from entities.player import Player, Player2
+from entities.player import Player1, Player2
 
 
 class Game:
@@ -17,10 +17,19 @@ class Game:
 
         self.game_is_running = True
 
+    def run(self):
+        # game.intro_screen()
+        self.start_new_game()
+        while self.game_is_running:
+            self.main()
+            # game.game_over()
+
     def start_new_game(self):
         self.user_is_playing = True
 
         self.all_sprites = pg.sprite.LayeredUpdates()
+        self.player1_sprite = pg.sprite.LayeredUpdates()
+        self.player2_sprite = pg.sprite.LayeredUpdates()
         self.block_sprites = pg.sprite.LayeredUpdates()
         self.minion_sprites = pg.sprite.LayeredUpdates()
         self.projectile_sprites = pg.sprite.LayeredUpdates()
@@ -41,7 +50,7 @@ class Game:
                     Block(self, j, i)
 
                 elif field == PLAYER1:
-                    Player(self, j, i, RED)
+                    Player1(self, j, i, RED)
 
                 elif field == PLAYER2:
                     Player2(self, j, i, BLUE)
