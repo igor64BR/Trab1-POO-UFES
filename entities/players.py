@@ -4,9 +4,6 @@ from entities.player_base import Player_base
 
 
 class Player1(Player_base):
-    def __init__(self, game, x: int, y: int, color: tuple[int, int, int]) -> None:
-        super().__init__(game, x, y, color)
-
     def set_groups(self, game):
         self.game = game
         self.groups = self.game.all_sprites, self.game.player1_sprite
@@ -22,10 +19,7 @@ class Player1(Player_base):
             pg.K_a: self.move_left,
         }        
 
-class Player2(Player1):
-    def __init__(self, game, x: int, y: int, color: tuple[int, int, int]) -> None:
-        super().__init__(game, x, y, color)
-
+class Player2(Player_base):
     def set_groups(self, game):
         self.game = game
         self.groups = self.game.all_sprites, self.game.player2_sprite

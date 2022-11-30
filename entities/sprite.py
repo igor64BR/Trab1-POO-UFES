@@ -3,9 +3,15 @@ from entities.configs import *
 
 
 class Sprite(pg.sprite.Sprite):
-    def __init__(self, game, x: int, y: int, color: tuple[int]) -> None:
+    def __init__(self,
+                 game,
+                 x: int,
+                 y: int,
+                 color: tuple[int],
+                 layer: int
+                 ) -> None:
         self.set_groups(game)
-        self._layer = BLOCK_LAYER
+        self._layer = layer
 
         pg.sprite.Sprite.__init__(self, self.groups)
 
@@ -24,4 +30,5 @@ class Sprite(pg.sprite.Sprite):
         self.rect.y = self.y
 
     def set_groups(self, game):
-        raise NotImplementedError("Method not implemented on son class")
+        raise NotImplementedError(
+            "'set_groups' method not implemented at sprite")

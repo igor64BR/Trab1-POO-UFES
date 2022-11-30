@@ -4,7 +4,8 @@ import sys
 from entities.block import Block
 
 from entities.configs import *
-from entities.player import Player1, Player2
+from entities.minion import Minion
+from entities.players import Player1, Player2
 
 
 class Game:
@@ -30,8 +31,8 @@ class Game:
         self.all_sprites = pg.sprite.LayeredUpdates()
         self.player1_sprite = pg.sprite.LayeredUpdates()
         self.player2_sprite = pg.sprite.LayeredUpdates()
-        self.block_sprites = pg.sprite.LayeredUpdates()
         self.minion_sprites = pg.sprite.LayeredUpdates()
+        self.block_sprites = pg.sprite.LayeredUpdates()
         self.projectile_sprites = pg.sprite.LayeredUpdates()
 
         self.p1 = pg.sprite.LayeredUpdates()
@@ -43,6 +44,7 @@ class Game:
         BLOCK = 'B'
         PLAYER1 = '1'
         PLAYER2 = '2'
+        MINION = 'M'
 
         for i, row in enumerate(TILE_MAP):
             for j, field in enumerate(row):
@@ -54,6 +56,9 @@ class Game:
 
                 elif field == PLAYER2:
                     Player2(self, j, i, BLUE)
+
+                elif field == MINION:
+                    Minion(self, j, i)
 
     def main(self):
         while self.user_is_playing:

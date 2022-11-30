@@ -6,7 +6,7 @@ from entities.configs import *
 
 class Player_base(Sprite):
     def __init__(self, game, x: int, y: int, color: tuple[int]) -> None:
-        super().__init__(game, x, y, color)
+        super().__init__(game, x, y, color, layer=PLAYER_LAYER)
 
         self.SPEED = 3
 
@@ -27,33 +27,24 @@ class Player_base(Sprite):
                 action()
 
         self.rect.x += self.x_current_speed
-        self.collide_blocks('x')
-        self.collide_enemy('x')
+        self.check_all_collisions('x')
 
         self.rect.y += self.y_current_speed
-        self.collide_blocks('y')
-        self.collide_enemy('y')
+        self.check_all_collisions('y')
 
         self.reset_speed_changes()
 
-    def collide_enemy(self, direction: str):
-        hits = pg.sprite.spritecollide(self, self.enemy_sprite, False)
+    def check_all_collisions(self, direction: str):
+        self.check_collision(direction, self.game.block_sprites)
+        self.check_collision(direction, self.enemy_sprite)
+        self.check_collision(direction, self.game.minion_sprites)
+
+    def check_collision(self, direction, sprite_group, dokill: bool = False):
+        hits = pg.sprite.spritecollide(self, sprite_group, dokill)
 
         if not hits:
             return
         
-        if direction == 'x':
-            self.check_x_collision(hits)
-
-        elif direction == 'y':
-            self.check_y_collision(hits)
-
-    def collide_blocks(self, direction: str):
-        hits = pg.sprite.spritecollide(self, self.game.block_sprites, False)
-
-        if not hits:
-            return
-
         if direction == 'x':
             self.check_x_collision(hits)
 
