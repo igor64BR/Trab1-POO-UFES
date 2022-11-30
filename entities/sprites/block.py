@@ -1,7 +1,7 @@
 import pygame as pg
 
 from entities.configs import *
-from entities.sprite import Sprite
+from entities.sprites.sprite import Sprite
 
 
 class Block(Sprite):

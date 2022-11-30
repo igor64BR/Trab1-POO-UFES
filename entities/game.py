@@ -1,11 +1,11 @@
 import pygame as pg
 
 import sys
-from entities.block import Block
+from entities.sprites.block import Block
 
 from entities.configs import *
-from entities.minion import Minion
-from entities.players import Player1, Player2
+from entities.sprites.minion import Minion
+from entities.sprites.players import Player1, Player2
 
 
 class Game:

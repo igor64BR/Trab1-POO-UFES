@@ -1,6 +1,6 @@
 import pygame as pg
 
-from entities.player_base import Player_base
+from entities.sprites.player_base import Player_base
 
 
 class Player1(Player_base):

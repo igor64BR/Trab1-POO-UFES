@@ -1,6 +1,6 @@
 import math
-from entities.player_base import Player_base
-from entities.sprite import Sprite
+from entities.sprites.player_base import Player_base
+from entities.sprites.sprite import Sprite
 from entities.configs import *
 
 

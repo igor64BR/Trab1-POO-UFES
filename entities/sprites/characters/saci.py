@@ -1,9 +1,9 @@
-from entities.characters.character import Character
+from entities.sprites.characters.character import Character
 from entities.configs import *
 
 
-class Curupira(Character):
+class Saci(Character):
     def __init__(self, player) -> None:
         self.player = player
-        self.player.name = CURUPIRA
+        self.player.name = SACI
         self.player.SPEED = 3

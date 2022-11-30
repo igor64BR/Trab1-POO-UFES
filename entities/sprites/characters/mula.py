@@ -1,4 +1,4 @@
-from entities.characters.character import Character
+from entities.sprites.characters.character import Character
 from entities.configs import *
 
 

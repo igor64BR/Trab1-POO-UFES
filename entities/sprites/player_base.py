@@ -1,11 +1,11 @@
 import pygame as pg
 
-from entities.sprite import Sprite
+from entities.sprites.sprite import Sprite
 from entities.configs import *
-from entities.characters.saci import *
-from entities.characters.mula import *
-from entities.characters.curupira import *
-from entities.characters.cuca import *
+from entities.sprites.characters.saci import *
+from entities.sprites.characters.mula import *
+from entities.sprites.characters.curupira import *
+from entities.sprites.characters.cuca import *
 
 
 class Player_base(Sprite):
