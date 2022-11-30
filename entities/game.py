@@ -31,7 +31,10 @@ class Game:
         self.all_sprites = pg.sprite.LayeredUpdates()
         self.player1_sprite = pg.sprite.LayeredUpdates()
         self.player2_sprite = pg.sprite.LayeredUpdates()
+        self.player_sprites = pg.sprite.LayeredUpdates()
+        
         self.minion_sprites = pg.sprite.LayeredUpdates()
+
         self.block_sprites = pg.sprite.LayeredUpdates()
         self.projectile_sprites = pg.sprite.LayeredUpdates()
 
@@ -39,6 +42,8 @@ class Game:
         self.p2 = pg.sprite.LayeredUpdates()
 
         self.create_tile_map()
+        
+        [minion.set_other_minions() for minion in self.minion_sprites.sprites()]
 
     def create_tile_map(self):
         BLOCK = 'B'

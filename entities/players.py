@@ -6,7 +6,7 @@ from entities.player_base import Player_base
 class Player1(Player_base):
     def set_groups(self, game):
         self.game = game
-        self.groups = self.game.all_sprites, self.game.player1_sprite
+        self.groups = self.game.all_sprites, self.game.player1_sprite, self.game.player_sprites
 
     def set_enemy_sprite(self):
         self.enemy_sprite = self.game.player2_sprite
@@ -17,12 +17,13 @@ class Player1(Player_base):
             pg.K_s: self.move_down,
             pg.K_d: self.move_right,
             pg.K_a: self.move_left,
-        }        
+        }
+
 
 class Player2(Player_base):
     def set_groups(self, game):
         self.game = game
-        self.groups = self.game.all_sprites, self.game.player2_sprite
+        self.groups = self.game.all_sprites, self.game.player2_sprite, self.game.player_sprites
 
     def set_enemy_sprite(self):
         self.enemy_sprite = self.game.player1_sprite

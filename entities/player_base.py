@@ -6,12 +6,7 @@ from entities.configs import *
 
 class Player_base(Sprite):
     def __init__(self, game, x: int, y: int, color: tuple[int]) -> None:
-        super().__init__(game, x, y, color, layer=PLAYER_LAYER)
-
-        self.SPEED = 3
-
-        self.x_current_speed = 0
-        self.y_current_speed = 0
+        super().__init__(game, x, y, color, layer=PLAYER_LAYER, speed=3)
 
         self.set_command()
         self.set_enemy_sprite()
@@ -38,32 +33,6 @@ class Player_base(Sprite):
         self.check_collision(direction, self.game.block_sprites)
         self.check_collision(direction, self.enemy_sprite)
         self.check_collision(direction, self.game.minion_sprites)
-
-    def check_collision(self, direction, sprite_group, dokill: bool = False):
-        hits = pg.sprite.spritecollide(self, sprite_group, dokill)
-
-        if not hits:
-            return
-        
-        if direction == 'x':
-            self.check_x_collision(hits)
-
-        elif direction == 'y':
-            self.check_y_collision(hits)
-
-    def check_y_collision(self, hits):
-        if self.y_current_speed > 0:  # Going to down
-            self.rect.y = hits[0].rect.top - self.rect.height
-
-        elif self.y_current_speed < 0:  # Going to up
-            self.rect.y = hits[0].rect.bottom
-
-    def check_x_collision(self, hits):
-        if self.x_current_speed > 0:  # Going to left
-            self.rect.x = hits[0].rect.left - self.rect.width
-
-        elif self.x_current_speed < 0:  # Going to right
-            self.rect.x = hits[0].rect.right
 
     def reset_speed_changes(self):
         self.x_current_speed = 0
