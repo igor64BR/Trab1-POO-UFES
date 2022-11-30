@@ -2,15 +2,21 @@
     "python.formatting.provider": "autopep8",
     "cSpell.words": [
         "blit",
+        "CABECA",
+        "cabeça",
         "cronometro",
+        "CUCA",
+        "CURUPIRA",
         "dokill",
         "Folclore",
         "FOLCLORICAS",
         "GUERRAS",
         "KEYDOWN",
         "MOUSEBUTTONDOWN",
+        "MULA",
         "OPÇÕES",
         "pygame",
+        "Saci",
         "SAIR",
         "spritecollide"
     ]

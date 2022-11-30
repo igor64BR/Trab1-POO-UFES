@@ -18,17 +18,18 @@ class Game:
 
         self.game_is_running = True
 
-    def run(self):
+    def run(self, character1: str, character2: str):
         # game.intro_screen()
-        self.start_new_game()
+        self.start_new_game(character1, character2)
         while self.game_is_running:
             self.main()
             # game.game_over()
 
-    def start_new_game(self):
+    def start_new_game(self, character1: str, character2: str):
         self.user_is_playing = True
 
         self.all_sprites = pg.sprite.LayeredUpdates()
+
         self.player1_sprite = pg.sprite.LayeredUpdates()
         self.player2_sprite = pg.sprite.LayeredUpdates()
         self.player_sprites = pg.sprite.LayeredUpdates()
@@ -36,16 +37,18 @@ class Game:
         self.minion_sprites = pg.sprite.LayeredUpdates()
 
         self.block_sprites = pg.sprite.LayeredUpdates()
+
         self.projectile_sprites = pg.sprite.LayeredUpdates()
+        self.ability_sprites = pg.sprite.LayeredUpdates()
 
         self.p1 = pg.sprite.LayeredUpdates()
         self.p2 = pg.sprite.LayeredUpdates()
 
-        self.create_tile_map()
+        self.create_tile_map(character1, character2)
         
         [minion.set_other_minions() for minion in self.minion_sprites.sprites()]
 
-    def create_tile_map(self):
+    def create_tile_map(self, character1: str, character2: str):
         BLOCK = 'B'
         PLAYER1 = '1'
         PLAYER2 = '2'
@@ -57,10 +60,10 @@ class Game:
                     Block(self, j, i)
 
                 elif field == PLAYER1:
-                    Player1(self, j, i, RED)
+                    Player1(self, j, i, RED, character1)
 
                 elif field == PLAYER2:
-                    Player2(self, j, i, BLUE)
+                    Player2(self, j, i, BLUE, character2)
 
                 elif field == MINION:
                     Minion(self, j, i)

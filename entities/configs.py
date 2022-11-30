@@ -18,12 +18,14 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+WHITE = (255, 255, 255)
 
 MINION_COLOR = (0, 255, 255)
 
 # layers
-PLAYER_LAYER = 3
-MINION_LAYER = 2
+PLAYER_LAYER = 4
+MINION_LAYER = 3
+ABILITIES_LAYER = 2
 BLOCK_LAYER = 1
 
 # directions
@@ -31,6 +33,14 @@ RIGHT = 'right'
 LEFT = 'left'
 UP = 'up'
 DOWN = 'down'
+
+# character names
+SACI = 'Saci'
+CUCA = 'Cuca'
+CURUPIRA = 'Curupira'
+MULA_SEM_CABECA = 'Mula-sem-cabeça'
+
+ALL_CHARACTERS = [SACI, CUCA, CURUPIRA, MULA_SEM_CABECA]
 
 # B = block, P = player
 TILE_MAP = [

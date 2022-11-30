@@ -78,7 +78,12 @@ class Menu:
 
     def __run_game(self):
         game = Game()
-        game.run()
+
+        # temp - personagens escolhidos a partir da tela de selecao
+        CHARACTER1 = MULA_SEM_CABECA
+        CHARACTER2 = CUCA
+
+        game.run(CHARACTER1, CHARACTER2)
 
         self.__exit_game()
 

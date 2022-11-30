@@ -2,14 +2,24 @@ import pygame as pg
 
 from entities.sprite import Sprite
 from entities.configs import *
+from entities.characters.saci import *
+from entities.characters.mula import *
+from entities.characters.curupira import *
+from entities.characters.cuca import *
 
 
 class Player_base(Sprite):
-    def __init__(self, game, x: int, y: int, color: tuple[int]) -> None:
+    def __init__(self,
+                 game,
+                 x: int,
+                 y: int,
+                 color: tuple[int],
+                 character: str) -> None:
         super().__init__(game, x, y, color, layer=PLAYER_LAYER, speed=3)
 
         self.set_command()
-        self.set_enemy_sprite()
+        self.choose_character(character)
+        self.set_enemy_sprite_collection()
 
     def update(self, *args, **kwargs) -> None:
         self.get_movement_commands()
@@ -58,8 +68,23 @@ class Player_base(Sprite):
         else:
             self.y_current_speed += magnitude * self.SPEED
 
-    def set_enemy_sprite(self):
-        raise NotImplementedError("'set_enemy_sprite' method not Implemented on Player class")
+    def choose_character(self, character: str):
+        if character == SACI:
+            self.character = Saci(self)
+
+        if character == CUCA:
+            self.character = Cuca(self)
+
+        if character == CURUPIRA:
+            self.character = Curupira(self)
+
+        if character == MULA_SEM_CABECA:
+            self.character = Mula(self)
+
+    def set_enemy_sprite_collection(self):
+        raise NotImplementedError(
+            "'set_enemy_sprite' method not Implemented on Player class")
 
     def set_command(self):
-        raise NotImplementedError("'set_command' method not Implemented on Player class")
+        raise NotImplementedError(
+            "'set_command' method not Implemented on Player class")

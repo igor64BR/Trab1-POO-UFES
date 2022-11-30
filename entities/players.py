@@ -8,7 +8,7 @@ class Player1(Player_base):
         self.game = game
         self.groups = self.game.all_sprites, self.game.player1_sprite, self.game.player_sprites
 
-    def set_enemy_sprite(self):
+    def set_enemy_sprite_collection(self):
         self.enemy_sprite = self.game.player2_sprite
 
     def set_command(self):
@@ -25,7 +25,7 @@ class Player2(Player_base):
         self.game = game
         self.groups = self.game.all_sprites, self.game.player2_sprite, self.game.player_sprites
 
-    def set_enemy_sprite(self):
+    def set_enemy_sprite_collection(self):
         self.enemy_sprite = self.game.player1_sprite
 
     def set_command(self):
