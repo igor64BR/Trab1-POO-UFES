@@ -25,7 +25,7 @@ class Sprite(pg.sprite.Sprite):
 
         sprite = pg.image.load(img)
         self.image = pg.Surface(coordinates)
-        self.image.set_colorkey(WHITE)
+        self.image.set_colorkey(PINK)
         self.image.blit(sprite, (0,0))
 
         self.rect = self.image.get_rect()

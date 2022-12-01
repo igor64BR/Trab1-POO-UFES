@@ -7,3 +7,6 @@ class Saci(Character):
         self.player = player
         self.player.name = SACI
         self.player.SPEED = 3
+
+        sprite = pg.image.load(SACI_PATH)
+        self.player.image.blit(sprite, (0,0))

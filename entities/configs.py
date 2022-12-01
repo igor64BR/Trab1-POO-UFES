@@ -19,6 +19,7 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 WHITE = (255, 255, 255)
+PINK = (255, 0, 208)
 
 MINION_COLOR = (0, 255, 255)
 
@@ -46,6 +47,7 @@ SACI_PATH = 'img/Saci.png'
 CUCA_PATH = 'img/Cuca.png'
 CURUPIRA_PATH = 'img/Curupira.png'
 MULA_SEM_CABECA_PATH = 'img/MulaSemCabeca.png'
+MINION_PATH = 'img/Cacador.png'
 
 ALL_CHARACTERS = [SACI, CUCA, CURUPIRA, MULA_SEM_CABECA]
 

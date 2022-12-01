@@ -80,7 +80,7 @@ class Menu:
         game = Game()
 
         # temp - personagens escolhidos a partir da tela de selecao
-        CHARACTER1 = MULA_SEM_CABECA
+        CHARACTER1 = CURUPIRA
         CHARACTER2 = CUCA
 
         game.run(CHARACTER1, CHARACTER2)
