@@ -13,9 +13,8 @@ class Player_base(Sprite):
                  game,
                  x: int,
                  y: int,
-                 color: tuple[int],
                  character: str) -> None:
-        super().__init__(game, x, y, color, layer=PLAYER_LAYER, speed=3)
+        super().__init__(game, x, y, layer=PLAYER_LAYER, speed=3)
 
         self.set_command()
         self.choose_character(character)

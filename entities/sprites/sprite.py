@@ -7,8 +7,8 @@ class Sprite(pg.sprite.Sprite):
                  game,
                  x: int,
                  y: int,
-                 color: tuple[int],
                  layer: int,
+                 img: str = 'img/Unknown.png',
                  speed: int = 0
                  ) -> None:
         self.set_groups(game)
@@ -23,8 +23,10 @@ class Sprite(pg.sprite.Sprite):
 
         coordinates = [self.width, self.height]
 
+        sprite = pg.image.load(img)
         self.image = pg.Surface(coordinates)
-        self.image.fill(color)
+        self.image.set_colorkey(WHITE)
+        self.image.blit(sprite, (0,0))
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x

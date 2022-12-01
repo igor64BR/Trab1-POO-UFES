@@ -6,7 +6,7 @@ from entities.sprites.sprite import Sprite
 
 class Block(Sprite):
     def __init__(self, game, x, y) -> None:
-        super().__init__(game, x, y, GREEN, layer=BLOCK_LAYER)
+        super().__init__(game, x, y, layer=BLOCK_LAYER, img="img/Saci.png")
 
     def set_groups(self, game):
         self.game = game

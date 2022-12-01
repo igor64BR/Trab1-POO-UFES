@@ -40,6 +40,13 @@ CUCA = 'Cuca'
 CURUPIRA = 'Curupira'
 MULA_SEM_CABECA = 'Mula-sem-cabeça'
 
+# character paths
+
+SACI_PATH = 'img/Saci.png'
+CUCA_PATH = 'img/Cuca.png'
+CURUPIRA_PATH = 'img/Curupira.png'
+MULA_SEM_CABECA_PATH = 'img/MulaSemCabeca.png'
+
 ALL_CHARACTERS = [SACI, CUCA, CURUPIRA, MULA_SEM_CABECA]
 
 # B = block, P = player

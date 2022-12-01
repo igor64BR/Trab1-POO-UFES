@@ -60,10 +60,10 @@ class Game:
                     Block(self, j, i)
 
                 elif field == PLAYER1:
-                    Player1(self, j, i, RED, character1)
+                    Player1(self, j, i, character1)
 
                 elif field == PLAYER2:
-                    Player2(self, j, i, BLUE, character2)
+                    Player2(self, j, i, character2)
 
                 elif field == MINION:
                     Minion(self, j, i)

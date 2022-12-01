@@ -7,3 +7,6 @@ class Cuca(Character):
         self.player = player
         self.player.name = CUCA
         self.player.SPEED = 4
+
+        sprite = pg.image.load(CUCA_PATH)
+        self.player.image.blit(sprite, (0,0))
