@@ -4,9 +4,9 @@ from entities.configs import *
 
 class Saci(Character):
     def __init__(self, player) -> None:
-        self.player = player
-        self.player.name = SACI
-        self.player.SPEED = 3
-
-        sprite = pg.image.load(SACI_PATH)
-        self.player.image.blit(sprite, (0,0))
+        super().__init__(
+            player,
+            img=SACI_PATH,
+            name=SACI,
+            speed=3
+        )

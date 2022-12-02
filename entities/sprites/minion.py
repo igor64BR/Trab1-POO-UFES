@@ -6,10 +6,11 @@ from entities.configs import *
 
 class Minion(Sprite):
     def __init__(self, game, x: int, y: int) -> None:
-        super().__init__(game, x, y, layer=MINION_LAYER, speed=1)
+        super().__init__(game, x, y, layer=MINION_LAYER)
 
         sprite = pg.image.load(MINION_PATH)
         self.image.blit(sprite, (0,0))
+        self.SPEED = 1
 
     def update(self):
         self.move_to_closest_player()

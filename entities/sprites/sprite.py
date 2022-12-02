@@ -3,14 +3,14 @@ from entities.configs import *
 
 
 class Sprite(pg.sprite.Sprite):
-    def __init__(self,
-                 game,
-                 x: int,
-                 y: int,
-                 layer: int,
-                 img: str = 'img/Unknown.png',
-                 speed: int = 0
-                 ) -> None:
+    def __init__(
+        self,
+        game,
+        x: int,
+        y: int,
+        layer: int,
+        img: str = 'img/Unknown.png',
+    ) -> None:
         self.set_groups(game)
         self._layer = layer
 
@@ -26,21 +26,18 @@ class Sprite(pg.sprite.Sprite):
         sprite = pg.image.load(img)
         self.image = pg.Surface(coordinates)
         self.image.set_colorkey(PINK)
-        self.image.blit(sprite, (0,0))
+        self.image.blit(sprite, (0, 0))
 
         self.rect = self.image.get_rect()
         self.rect.x = self.x
         self.rect.y = self.y
 
-        self.set_speed(speed)
+        self.SPEED = 0
+        self.reset_speed_changes()
 
     def set_groups(self, game):
         raise NotImplementedError(
             "'set_groups' method not implemented at sprite")
-
-    def set_speed(self, speed: int):
-        self.SPEED = speed
-        self.reset_speed_changes()
 
     def reset_speed_changes(self):
         self.x_current_speed = 0
