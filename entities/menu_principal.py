@@ -25,7 +25,7 @@ class Menu:
         pygame.display.set_caption("Menu")
 
         mixer.init()
-        mixer.music.load("img\magic-forest-95823.mp3")
+        mixer.music.load("img\magic-forest-95823.wav")
         mixer.music.play()
 
         self.__open_main_menu()
