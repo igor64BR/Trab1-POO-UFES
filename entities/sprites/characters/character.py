@@ -75,6 +75,8 @@ class Character:
 
         self.mutated_character.player.attack_damage /= self.AUTO_ATTACK_BUFF
 
+        self.mutate_last_cast_moment = self.cronometro.start_new_reference_time()
+
         self.mutated_character = None
         self.mutation_initial_time = None
 
@@ -89,6 +91,13 @@ class Character:
             self.end_mutate_character()
 
     def try_start_mutation_skill(self):
+        SKILL_COOL_DOWN = 10  # seconds
+
+        skill_in_cool_down = self.cronometro.get_time_spent(self.mutate_last_cast_moment) <= SKILL_COOL_DOWN
+
+        if self.mutate_last_cast_moment != None and skill_in_cool_down:
+            return
+
         if not self.mutate_skill_is_running:
             self.start_mutate_character()
 
