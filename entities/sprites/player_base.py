@@ -16,12 +16,13 @@ class Player_base(Sprite):
                  character: str) -> None:
         super().__init__(game, x, y, layer=PLAYER_LAYER)
 
-        self.set_command()
         self.choose_character(character)
         self.set_enemy_sprite_collection()
+        self.set_command()
 
     def update(self, *args, **kwargs) -> None:
         self.get_movement_commands()
+        self.character.update()
 
     def get_movement_commands(self):
         keys = pg.key.get_pressed()
@@ -85,5 +86,6 @@ class Player_base(Sprite):
             "'set_enemy_sprite' method not Implemented on Player class")
 
     def set_command(self):
+        self.commands = {}
         raise NotImplementedError(
             "'set_command' method not Implemented on Player class")

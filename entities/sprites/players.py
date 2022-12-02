@@ -17,6 +17,7 @@ class Player1(Player_base):
             pg.K_s: self.move_down,
             pg.K_d: self.move_right,
             pg.K_a: self.move_left,
+            pg.K_q: self.character.try_start_mutation_skill
         }
 
 
@@ -34,4 +35,5 @@ class Player2(Player_base):
             pg.K_k: self.move_down,
             pg.K_l: self.move_right,
             pg.K_j: self.move_left,
+            pg.K_u: self.character.try_start_mutation_skill
         }

@@ -4,8 +4,8 @@ from cronometro import Cronometro
 
 
 class Character:
-    def __init__(self, player, img: str, name: str, speed: int = 3, max_life: int = 100) -> None:
-        self.set_player_attributes(player, img, name, speed, max_life)
+    def __init__(self, player, img: str, name: str, speed: int = 3, max_life: int = 100, damage: int = 5) -> None:
+        self.set_player_attributes(player, img, name, speed, max_life, damage)
         self.init_skill()
         self.init_basic_attack()
         self.init_mutate()
@@ -15,6 +15,9 @@ class Character:
         self.mutate_skill_is_running = False
         self.mutate_character_start_moment = None
         self.mutate_last_cast_moment = None
+
+        self.LIFE_DEBUFF = 70 / 100
+        self.AUTO_ATTACK_BUFF = 120 / 100
 
     def init_basic_attack(self):
         """Sets basic attack initial statuses"""
@@ -27,20 +30,26 @@ class Character:
         self.skill_start_moment = None
         self.skill_last_cast_moment = None
 
-    def set_player_attributes(self, player, img, name, speed, max_life):
+    def set_player_attributes(self, player, img, name, speed, max_life, damage):
         self.game = player.game
         self.player = player
 
         self.player.name = name
         self.player.SPEED = speed
 
+        self.player.attack_damage = damage
         self.player.MAX_LIFE = max_life
-        self.current_life = self.player.MAX_LIFE
+        self.player.current_life = self.player.MAX_LIFE
 
         sprite = pg.image.load(img)
         self.player.image.blit(sprite, (0, 0))
 
         self.cronometro = Cronometro()
+
+    def update(self):
+        self.update_mutate_character()
+        # self.update_skill()
+        # self.update_basic_attack()
 
     def basic_attack(self):
         raise NotImplementedError(
@@ -49,14 +58,39 @@ class Character:
     def start_mutate_character(self):
         self.mutate_skill_is_running = True
 
-        self.chosen_mutated_character = self.choose_character()
+        self.mutated_character = self.choose_character()
+
+        self.mutated_character.player.MAX_LIFE *= self.LIFE_DEBUFF
+        self.mutated_character.player.current_life *= self.LIFE_DEBUFF
+
+        self.mutated_character.player.attack_damage *= self.AUTO_ATTACK_BUFF
+
+        self.mutation_initial_time = self.cronometro.start_new_reference_time()
 
     def end_mutate_character(self):
         self.mutate_skill_is_running = False
-        pass
+
+        self.mutated_character.player.MAX_LIFE /= self.LIFE_DEBUFF
+        self.mutated_character.player.current_life /= self.LIFE_DEBUFF
+
+        self.mutated_character.player.attack_damage /= self.AUTO_ATTACK_BUFF
+
+        self.mutated_character = None
+        self.mutation_initial_time = None
 
     def update_mutate_character(self):
-        pass
+        if not self.mutate_skill_is_running:
+            return
+
+        MUTATION_DURATION = 5  # seconds
+        time_spent = self.cronometro.get_time_spent(self.mutation_initial_time)
+
+        if time_spent > MUTATION_DURATION:
+            self.end_mutate_character()
+
+    def try_start_mutation_skill(self):
+        if not self.mutate_skill_is_running:
+            self.start_mutate_character()
 
     def start_skill(self):
         raise NotImplementedError(
