@@ -51,7 +51,7 @@ MINION_PATH = 'img/Cacador.png'
 
 ALL_CHARACTERS = [SACI, CUCA, CURUPIRA, MULA_SEM_CABECA]
 
-# B = block, P = player
+# B = block, 1 = player 1, 2 = player 2, M = minion
 TILE_MAP = [
     'BBBBBBBBBBBBBBBBBBBBB',
     'B...................B',

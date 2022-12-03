@@ -16,20 +16,24 @@ class Player_base(Sprite):
                  character: str) -> None:
         super().__init__(game, x, y, layer=PLAYER_LAYER)
 
+        self.controllable = True
+        
         self.choose_character(character)
         self.set_enemy_sprite_collection()
         self.set_command()
 
     def update(self, *args, **kwargs) -> None:
-        self.get_movement_commands()
+        if self.controllable:
+            self.get_all_commands()
+            
         self.character.update()
 
-    def get_movement_commands(self):
-        keys = pg.key.get_pressed()
+    def get_all_commands(self):
+        self.get_movement_commands()
+        self.get_combat_commands()
 
-        for key, action in self.commands.items():
-            if keys[key]:
-                action()
+    def get_movement_commands(self):
+        self.get_commands(self.move_commands)
 
         self.rect.x += self.x_current_speed
         self.check_all_collisions('x')
@@ -39,14 +43,20 @@ class Player_base(Sprite):
 
         self.reset_speed_changes()
 
+    def get_combat_commands(self):
+        self.get_commands(self.combat_commands)
+
+    def get_commands(self, commands: dict):
+        keys = pg.key.get_pressed()
+
+        for key, action in commands.items():
+            if keys[key]:
+                action()
+
     def check_all_collisions(self, direction: str):
         self.check_collision(direction, self.game.block_sprites)
         self.check_collision(direction, self.enemy_sprite)
         self.check_collision(direction, self.game.minion_sprites)
-
-    def reset_speed_changes(self):
-        self.x_current_speed = 0
-        self.y_current_speed = 0
 
     def move_up(self):
         self.move(UP, False, -1)

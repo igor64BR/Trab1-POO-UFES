@@ -47,9 +47,9 @@ class Character:
         self.cronometro = Cronometro()
 
     def update(self):
-        self.update_mutate_character()
-        # self.update_skill()
         # self.update_basic_attack()
+        self.update_mutate_character()
+        self.update_skill()
 
     def basic_attack(self):
         raise NotImplementedError(
@@ -81,25 +81,34 @@ class Character:
         self.mutation_initial_time = None
 
     def update_mutate_character(self):
+        MUTATION_DURATION = 5  # seconds
+
         if not self.mutate_skill_is_running:
             return
 
-        MUTATION_DURATION = 5  # seconds
-        time_spent = self.cronometro.get_time_spent(self.mutation_initial_time)
-
-        if time_spent > MUTATION_DURATION:
-            self.end_mutate_character()
+        self.try_end_action(
+            MUTATION_DURATION, self.mutation_initial_time, self.end_mutate_character)
 
     def try_start_mutation_skill(self):
         SKILL_COOL_DOWN = 10  # seconds
 
-        skill_in_cool_down = self.cronometro.get_time_spent(self.mutate_last_cast_moment) <= SKILL_COOL_DOWN
+        self.try_start_action(
+            SKILL_COOL_DOWN,
+            self.mutate_last_cast_moment,
+            self.mutate_skill_is_running,
+            self.start_mutate_character
+        )
 
-        if self.mutate_last_cast_moment != None and skill_in_cool_down:
+    def try_start_action(self, cool_down: int, last_cast_moment: int, action_is_running: bool, action: callable):
+        if last_cast_moment and self.cronometro.get_time_spent(last_cast_moment) <= cool_down:
             return
 
-        if not self.mutate_skill_is_running:
-            self.start_mutate_character()
+        if not action_is_running:
+            action()
+
+    def try_end_action(self, duration: int, init_time: int, action: callable):
+        if self.cronometro.get_time_spent(init_time) > duration:
+            action()
 
     def start_skill(self):
         raise NotImplementedError(
@@ -109,9 +118,13 @@ class Character:
         raise NotImplementedError(
             f"'end_skill' method not implemented on character")
 
+    def try_start_skill(self):
+        raise NotImplementedError(
+            f"'try_start_skill' method not implemented on character {self.player.name}")
+
     def update_skill(self):
         raise NotImplementedError(
-            f"'update_skill' method not implemented on character")
+            f"'update_skill' method not implemented on character {self.player.name}")
 
     def choose_character(self):
         """
