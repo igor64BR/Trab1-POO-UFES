@@ -52,8 +52,7 @@ class Character:
         self.update_skill()
 
     def basic_attack(self):
-        raise NotImplementedError(
-            f"'basic_attack' method not implemented on character")
+        pass
 
     def start_mutate_character(self):
         self.mutate_skill_is_running = True
@@ -111,16 +110,13 @@ class Character:
             action()
 
     def start_skill(self):
-        raise NotImplementedError(
-            f"'start_skill' method not implemented on character")
+        pass
 
     def end_skill(self):
-        raise NotImplementedError(
-            f"'end_skill' method not implemented on character")
+        pass
 
     def try_start_skill(self):
-        raise NotImplementedError(
-            f"'try_start_skill' method not implemented on character {self.player.name}")
+        pass
 
     def update_skill(self):
         pass
