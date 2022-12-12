@@ -123,8 +123,7 @@ class Character:
             f"'try_start_skill' method not implemented on character {self.player.name}")
 
     def update_skill(self):
-        raise NotImplementedError(
-            f"'update_skill' method not implemented on character {self.player.name}")
+        pass
 
     def choose_character(self):
         """
