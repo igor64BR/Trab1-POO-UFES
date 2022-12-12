@@ -23,6 +23,8 @@ PINK = (255, 0, 208)
 
 MINION_COLOR = (0, 255, 255)
 
+TEXT_COLOR = '#d7fcd4'
+
 # layers
 PLAYER_LAYER = 4
 MINION_LAYER = 3
@@ -42,7 +44,6 @@ CURUPIRA = 'Curupira'
 MULA_SEM_CABECA = 'Mula-sem-cabeça'
 
 # character paths
-
 SACI_PATH = 'img/Saci.png'
 CUCA_PATH = 'img/Cuca.png'
 CURUPIRA_PATH = 'img/Curupira.png'

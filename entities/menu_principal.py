@@ -1,10 +1,9 @@
 import sys
 import pygame
-from pygame import mixer
 from pygame.font import Font
-from entities.game import Game
 from entities.button import Button
 from entities.configs import *
+from entities.character_select import Selection_screen
 
 
 class Menu:
@@ -23,10 +22,6 @@ class Menu:
         self.screen = pygame.display.set_mode(MENU_DIMENSIONS)
         self.background_image = pygame.image.load("img/capa-3.jpg")
         pygame.display.set_caption("Menu")
-
-        mixer.init()
-        mixer.music.load("img\magic-forest-95823.wav")
-        mixer.music.play()
 
         self.__open_main_menu()
 
@@ -77,15 +72,7 @@ class Menu:
         return
 
     def __run_game(self):
-        game = Game()
-
-        # temp - personagens escolhidos a partir da tela de selecao
-        CHARACTER1 = SACI
-        CHARACTER2 = CUCA
-
-        game.run(CHARACTER1, CHARACTER2)
-
-        self.__exit_game()
+        Selection_screen()
 
     def __exit_game(self):
         pg.quit()
